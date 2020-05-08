@@ -16,7 +16,10 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
-   sodipodi:docname="logo.svg">
+   sodipodi:docname="logo.svg"
+   inkscape:export-filename="/home/denis/git/huepaper/images/logo.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
   <defs
      id="defs2">
     <linearGradient
@@ -40,7 +43,16 @@
        x2="24.117346"
        y2="171.88989"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="translate(-96.005952,-15.875)" />
+       gradientTransform="matrix(0.72684465,0,0,0.72684465,247.05365,169.03895)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient825-7"
+       id="linearGradient877"
+       x1="-6.9618227e-07"
+       y1="263.02499"
+       x2="264.58331"
+       y2="263.02499"
+       gradientUnits="userSpaceOnUse" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -49,9 +61,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35"
-     inkscape:cx="-351.42857"
-     inkscape:cy="562.85714"
+     inkscape:zoom="0.7"
+     inkscape:cx="334.28571"
+     inkscape:cy="391.42857"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -78,30 +90,26 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-240.77602)">
-    <g
-       id="g866"
-       transform="matrix(0.72684465,0,0,0.72684465,316.83506,180.57761)">
-      <text
-         inkscape:export-ydpi="62.799999"
-         inkscape:export-xdpi="62.799999"
-         inkscape:export-filename="/home/denis/git/huepaper/hp.png"
-         id="text817"
-         y="129.62593"
-         x="-439.23657"
-         style="font-style:normal;font-weight:normal;font-size:77.48342896px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.93708575"
-         xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:FreeMono;-inkscape-font-specification:FreeMono;stroke-width:1.93708575"
-           y="129.62593"
-           x="-439.23657"
-           id="tspan815"
-           sodipodi:role="line">huepaper</tspan></text>
-      <rect
-         y="151.85912"
-         x="-435.77036"
-         height="8.311554"
-         width="363.7475"
-         id="rect819"
-         style="fill:url(#linearGradient827);fill-opacity:1;stroke:none;stroke-width:0.2685062;stroke-opacity:1" />
-    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:56.3184166px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:url(#linearGradient877);fill-opacity:1.0;stroke:none;stroke-width:1.40796041"
+       x="-2.4216926"
+       y="274.79553"
+       id="text817"
+       inkscape:export-filename="/home/denis/git/huepaper/hp.png"
+       inkscape:export-xdpi="62.799999"
+       inkscape:export-ydpi="62.799999"><tspan
+         sodipodi:role="line"
+         id="tspan815"
+         x="-2.4216926"
+         y="274.79553"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:FreeMono;-inkscape-font-specification:FreeMono;stroke-width:1.40796041;fill-opacity:1.0;fill:url(#linearGradient877)">huepaper</tspan></text>
+    <rect
+       style="fill:url(#linearGradient827);fill-opacity:1;stroke:none;stroke-width:0.1951623;stroke-opacity:1"
+       id="rect819"
+       width="264.38791"
+       height="6.0412087"
+       x="0.09770868"
+       y="290.9556" />
   </g>
 </svg>
