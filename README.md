@@ -63,6 +63,10 @@ Install the python requirements with `pip install -r requirements.txt`.
 All image operations are called in order of the help file. E.g. pixelate
 (`-P`) is called after adding lines (`-l`).
 
+## Examples
+
+![`huepaper.py -p`](./images/huepaper_1.png)
+
 ## Acknowledgements
 
 Thanks to all the people who created the nice software, this project in
