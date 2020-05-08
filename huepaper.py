@@ -4,40 +4,9 @@ import argparse
 import os.path
 import random
 import sys
-from PIL import Image, ImageDraw, ImageOps
 from colour import Color
+from PIL import Image, ImageDraw, ImageOps
 
-
-# Create base image from four colors, width and height
-# c1 - top left
-# c2 - top right
-# c3 - bottom right
-# c4 - bottom left
-def create_base_image(c1, c2, c3, c4):
-
-    # Lambda for adding four colors
-    add = lambda c1, c2, c3, c4 : (c1[0] + c2[0] + c3[0] + c4[0], c1[1] + c2[1] + c3[1] + c4[1], c1[2] + c2[2] + c3[2] + c4[2])
-
-    # Lambda for multiplying a color with a factor
-    mul = lambda c, x : (c[0] * x, c[1] * x, c[2] * x)
-
-    # Lambda for scaling a color from [0 , 1] to [0, 255]
-    cor = lambda c : (int(c[0] * 255), int(c[1] * 255), int(c[2] * 255))
-
-    # Lambda for calculating a color at x and y in range [0, 1]
-    #  Color limits are set at creation
-    col = lambda x, y, c1 = c1, c2 = c2, c3 = c3, c4 = c4 : cor(add(mul(c1, (1.0 - x) * (1.0 - y)), mul(c2, x * (1.0 - y)), mul(c3, x * y), mul(c4, (1.0 - x) * y)))
-
-    # Create image
-    imgage = Image.new('RGBA', (width, height))
-    pixels = imgage.load()
-    
-    for x in range(0, width):
-        for y in range(0, height):
-            pixels[x, y] = col(x / (width - 1), y / (height - 1))
-
-    return imgage
-        
 
 # Get base color
 def get_base_color(color_string = None):
@@ -88,31 +57,39 @@ def create_colors(base_color):
     return tuple(colors)
 
 
-# Add emblem to an image from a filepath
-def add_emblem(image, filepath):
+# Create base image from four colors, width and height
+# c1 - top left
+# c2 - top right
+# c3 - bottom right
+# c4 - bottom left
+def create_base_image(c1, c2, c3, c4):
 
-    # Load image
-    try:
-        emblem_image = Image.open(filepath)
-    except Exception as e:
-        print('Failed to load emblem: {}'.format(e))
-        sys.exit(1)
+    # Lambda for adding four colors
+    add = lambda c1, c2, c3, c4 : (c1[0] + c2[0] + c3[0] + c4[0], c1[1] + c2[1] + c3[1] + c4[1], c1[2] + c2[2] + c3[2] + c4[2])
 
-    # Exit if emblem is too big
-    if emblem_image.size[0] > width or emblem_image.size[1] > height:
-        print('Emblem can\'t be bigger than the wallpaper')
-        sys.exit(1)
+    # Lambda for multiplying a color with a factor
+    mul = lambda c, x : (c[0] * x, c[1] * x, c[2] * x)
 
-    # Insert emblem in the center
-    offset = ((image.size[0] - emblem_image.size[0]) // 2, (image.size[1] - emblem_image.size[1]) // 2)
-    image.alpha_composite(emblem_image, offset)
+    # Lambda for scaling a color from [0 , 1] to [0, 255]
+    cor = lambda c : (int(c[0] * 255), int(c[1] * 255), int(c[2] * 255))
+
+    # Lambda for calculating a color at x and y in range [0, 1]
+    #  Color limits are set at creation
+    col = lambda x, y, c1 = c1, c2 = c2, c3 = c3, c4 = c4 : cor(add(mul(c1, (1.0 - x) * (1.0 - y)), mul(c2, x * (1.0 - y)), mul(c3, x * y), mul(c4, (1.0 - x) * y)))
+
+    # Create image
+    image = Image.new('RGBA', (width, height))
+    pixels = image.load()
+    
+    for x in range(0, width):
+        for y in range(0, height):
+            pixels[x, y] = col(x / (width - 1), y / (height - 1))
 
     return image
 
 
 # Add lines to an image
 def add_lines(image, color):
-
 
     line_image = Image.new('RGBA', (width, height), (0, 0, 0, 0))
     draw = ImageDraw.Draw(line_image)
@@ -153,6 +130,28 @@ def add_pixelation(image, x, y):
     return image
 
 
+# Add emblem to an image from a filepath
+def add_emblem(image, filepath):
+
+    # Load image
+    try:
+        emblem_image = Image.open(filepath)
+    except Exception as e:
+        print('Failed to load emblem: {}'.format(e))
+        sys.exit(1)
+
+    # Exit if emblem is too big
+    if emblem_image.size[0] > width or emblem_image.size[1] > height:
+        print('Emblem can\'t be bigger than the wallpaper')
+        sys.exit(1)
+
+    # Insert emblem in the center
+    offset = ((image.size[0] - emblem_image.size[0]) // 2, (image.size[1] - emblem_image.size[1]) // 2)
+    image.alpha_composite(emblem_image, offset)
+
+    return image
+
+
 # Save image to filepath
 def save_image(filepath, image):
 
@@ -165,10 +164,19 @@ def save_image(filepath, image):
             save = False
 
     if save:
-        try:
-            image.save(filepath)
-        except Exception as e:
-            print('Failed to save wallpaper: {}'.format(e))
+
+        stop = False
+        while not stop:
+            try:
+                image.save(filepath)
+                stop = True
+            except Exception as e:
+                print('Failed to save wallpaper: {}'.format(e))
+                again = input('Do you want to try again? [Y/n] ')
+                if again == 'n' or again == 'N':
+                    stop = True
+                else:
+                    filepath = input('Please enter new path where the wallpaper shall be saved: ')
 
 
 '''
@@ -189,8 +197,8 @@ def main():
     parser.add_argument('-l', '--lines', nargs = '?', const = 0.1, type = float, help = 'include one to three random lines in base color with given opacity in range [0, 1] (default: 0.1)')
     parser.add_argument('-lb', '--lines_bright', nargs = '?', const = 0.1, type = float, help = 'include one to three bright random lines with given opacity in range [0, 1] (default: 0.1)')
     parser.add_argument('-ld', '--lines_dark', nargs = '?', const = 0.1, type = float, help = 'include one to three dark random lines with given opacity in range [0, 1] (default: 0.1)')
-    parser.add_argument('-e', '--emblem', help = 'emblem to add in the center of the wallpaper')
     parser.add_argument('-P', '--pixelate', help = "pixelate image (e.g. 42x42)")
+    parser.add_argument('-e', '--emblem', help = 'emblem to add in the center of the wallpaper')
     parser.add_argument('-hue', default = 0.1, type = float, help = 'maximum hue to differ from given color in range [0, 1] (default: 0.1)')
     parser.add_argument('-smin', default = 0.2, type = float, help = 'minimum satisfaction for colors in range [0, 1] (default: 0.2)')
     parser.add_argument('-smax', default = 1.0, type = float, help = 'maximum satisfaction for colors in range [0, 1] (default: 1.0)')
@@ -238,11 +246,11 @@ def main():
     if lines_dark:
         image = add_lines(image, (0.0, 0.0, 0.0, lines_dark))
 
-    if emblem:
-        image = add_emblem(image, emblem)
-
     if pixelate:
         image = add_pixelation(image, px, py)
+        
+    if emblem:
+        image = add_emblem(image, emblem)
 
     if preview:
         image.show()
