@@ -1,4 +1,6 @@
-# huepaper
+# huepaper - a colorful wallpaper generator
+
+![Logo](./images/logo.png)
 
 **huepaper** creates wallpapers based on color hues. Bring a little
 color in your life by randomness, because every huepaper is truly
