@@ -63,9 +63,21 @@ Install the python requirements with `pip install -r requirements.txt`.
 All image operations are called in order of the help file. E.g. pixelate
 (`-P`) is called after adding lines (`-l`).
 
+Valid color expressions are e.g. `#F5F5DC`, `#0f0`, `red`.
+Make sure, that colors beginning with a `#` are encapsulated in quotes (`"`).
+All supported color names can be seen [here](https://www.w3schools.com/colors/colors_names.asp).
+
 ## Examples
 
-![`huepaper.py -p`](./images/huepaper_1.png)
+![Huepaper 1](./images/huepaper_1.png)
+
+`huepaper.py -p`
+
+---
+
+![Huepaper 1](./images/huepaper_2.png)
+
+`/huepaper.py -p -c lightgreen`
 
 ## Acknowledgements
 
