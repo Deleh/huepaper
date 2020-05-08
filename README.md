@@ -1,7 +1,8 @@
 # huepaper
 
-**huepaper** creates wallpapers based on color hues.
-Bring a little color in your life by randomness, because every huepaper is truly unique.
+**huepaper** creates wallpapers based on color hues. Bring a little
+color in your life by randomness, because every huepaper is truly
+unique.
 
 You can find [examples](#examples) below.
 
@@ -66,49 +67,56 @@ Install the python requirements with `pip install -r requirements.txt`.
 All image operations are called in order of the help file. E.g. pixelate
 (`-P`) is called after adding lines (`-l`).
 
-If you set the color via `-c` it is not guaranteed, that it is included in the huepaper.
-Colors, similar to the given one are chosen.
-You can specify how far the colors differ in the hue range with the `-hue` parameter.
-Valid color expressions are e.g. `#F5F5DC`, `#0f0`, `red`.
-Make sure, that colors beginning with a `#` are encapsulated in quotes (`"`).
-All supported color names can be seen [here](https://www.w3schools.com/colors/colors_names.asp).
+If you set the color via `-c` it is not guaranteed, that it is included
+in the huepaper. Colors, similar to the given one are chosen. You can
+specify how far the colors differ in the hue range with the `-hue`
+parameter. Valid color expressions are e.g. `#F5F5DC`, `#0f0`, `red`.
+Make sure, that colors beginning with a `#` are encapsulated in quotes
+(`"`). All supported color names can be seen
+[here](https://www.w3schools.com/colors/colors_names.asp).
+
+If you use the `-e` argument to specify an emblem, make sure it has the
+right size. It is not scaled or stretched, just placed in the center of
+the image. If you want an offset, e.g. put it in the left bottom corner,
+provide an emblem file with the size of the huepaper, transparent
+background and your emblem in the bottom left corner.
 
 ## Examples
 
-Please note, that every huepaper call generates a new random image.
-You will never get the same huepaper twice.
-You may like some and dislike others.
-Fiddle around with the options to find a result, you are happy with.
+Please note, that every huepaper call generates a new random image. You
+will never get the same huepaper twice. You may like some and dislike
+others. Fiddle around with the options to find a result, you are happy
+with.
 
 ![Huepaper 1](./images/huepaper_1.png)
 
 `huepaper.py -p`
 
----
+-----
 
 ![Huepaper 2](./images/huepaper_2.png)
 
 `huepaper.py -p -c lightgreen`
 
----
+-----
 
 ![Huepaper 3](./images/huepaper_3.png)
 
 `huepaper.py -p -c "#800000" -lb 0.05`
 
----
+-----
 
 ![Huepaper 4](./images/huepaper_4.png)
 
 `huepaper.py -p -hue 1.0 -lmin 0.3 -lmax 0.6 -smin 0.8 -smax 1.0`
 
----
+-----
 
 ![Huepaper 5](./images/huepaper_5.png)
 
 `huepaper.py -p -hue 0.3 -lmin 0.5 -lmax 0.5 -l 0.5 -P 64x36`
 
----
+-----
 
 ![Huepaper 6](./images/huepaper_6.png)
 
