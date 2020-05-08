@@ -41,7 +41,7 @@ def create_colors(base_color):
     # Create four random colors similar to the given base_color
     for i in range(0, 4):
 
-        tmp_hue = base_color.hue + random.uniform(-max_hue, max_hue)
+        tmp_hue = base_color.hue + random.uniform(-max_hue / 2.0, max_hue / 2.0)
         if tmp_hue > 1.0:
             tmp_hue -= 1
 
