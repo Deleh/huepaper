@@ -75,9 +75,33 @@ All supported color names can be seen [here](https://www.w3schools.com/colors/co
 
 ---
 
-![Huepaper 1](./images/huepaper_2.png)
+![Huepaper 2](./images/huepaper_2.png)
 
-`/huepaper.py -p -c lightgreen`
+`huepaper.py -p -c lightgreen`
+
+---
+
+![Huepaper 3](./images/huepaper_3.png)
+
+`huepaper.py -p -c "#800000" -lb 0.05`
+
+---
+
+![Huepaper 4](./images/huepaper_4.png)
+
+`huepaper.py -p -hue 1.0 -lmin 0.3 -lmax 0.6 -smin 0.8 -smax 1.0`
+
+---
+
+![Huepaper 5](./images/huepaper_5.png)
+
+`huepaper.py -p -ld 0.5 -P 32x1 -lmax 0.4`
+
+---
+
+![Huepaper 6](./images/huepaper_6.png)
+
+`huepaper.py -p -l -lb -ld -e nixos.png`
 
 ## Acknowledgements
 
