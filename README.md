@@ -2,7 +2,7 @@
 
 **huepaper** creates wallpapers based on color hues.
 
-## Instalation
+## Installation
 
 Until now there is no install method, just ways to call the script.
 
