@@ -2,7 +2,8 @@
 
 ![Logo](./images/logo.png)
 
-**huepaper** creates wallpapers based on color hues. 
+**huepaper** creates wallpapers based on color hues.
+It is based on [**colour**](https://github.com/vaab/colour) and [**pillow**](https://python-pillow.org/).
 Every *huepaper* is randomly generated and therefore truly unique.
 Let randomness bring a little color in your life.
 
