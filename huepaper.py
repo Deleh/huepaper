@@ -183,7 +183,6 @@ def save_image(filepath, image):
         stop = False
         while not stop:
             try:
-                image.mode = 'RGB'
                 image.save(filepath)
                 stop = True
             except Exception as e:
@@ -268,6 +267,8 @@ def main():
         
     if emblem:
         image = add_emblem(image, emblem)
+
+    image.mode = 'RGB'
 
     if preview:
         image.show()
