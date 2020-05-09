@@ -2,9 +2,9 @@
 
 ![Logo](./images/logo.png)
 
-**huepaper** creates wallpapers based on color hues. Bring a little
-color in your life by randomness, because every huepaper is truly
-unique.
+**huepaper** creates wallpapers based on color hues. 
+Every *huepaper* is randomly generated and therefore truly unique.
+Let randomness bring a little color in your life.
 
 You can find [examples](#examples) below.
 
