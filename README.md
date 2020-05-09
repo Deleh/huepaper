@@ -2,10 +2,13 @@
 
 ![Logo](./images/logo.png)
 
-**huepaper** creates colorful wallpapers, using the [HSL](https://en.wikipedia.org/wiki/HSL_and_HSV) color room.
-It is based on [**colour**](https://github.com/vaab/colour) and [**pillow**](https://python-pillow.org/).
-Every *huepaper* is randomly generated and therefore truly unique.
-Let randomness bring a little color in your life.
+**huepaper** creates colorful wallpapers, using the [HSL color
+space](https://en.wikipedia.org/wiki/HSL_and_HSV). It is based on
+[**colour**](https://github.com/vaab/colour) and
+[**pillow**](https://python-pillow.org/).
+
+Every *huepaper* is randomly generated and therefore truly unique. Let
+randomness bring a little color in your life.
 
 You can find [examples](#examples) below.
 
