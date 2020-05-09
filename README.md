@@ -104,7 +104,7 @@ with.
 
 ![Huepaper 3](./images/huepaper_3.png)
 
-`huepaper.py -p -c "#800000" -lb 0.05`
+`huepaper.py -p -c "#ff7f50" -lb 0.05`
 
 -----
 
