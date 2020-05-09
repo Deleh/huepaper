@@ -8,6 +8,21 @@ from colour import Color
 from PIL import Image, ImageDraw, ImageOps
 
 
+def print_logo():
+    logo = '''
+ .lk.
+  cO.
+  cO.;:lc.  ,c.  .cc   .,',c;  .,c.;coc.   ;,.,c.  ':l.:lo:    '',:c.  '::.lo. 
+  cO'   kd  .O;   dO  ,x...,Ox  cO;   lO: ;x   xk   OO.  .kO. x;...x0'  0x. .  
+  cO.   xx  .O;   dO  ko......  :O.    Ox  .,..xO   kk    ;0;;0......   0d     
+  cO.   xx  .O;   xO  dO.    .. :O.   .O; dk   xO   kk    :O.'0o     ,  0d     
+ .dk,  .kk.  okc;,ox'  ckxllc.  :Oc'.,l'  oOl;'dO:. kO;..:l.  ,xOolc;  ,Ox.    
+                                :O.                 kk                         
+                                lO,                 OO                         
+ OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO00O0000000000000000; 
+''';
+    print(logo)
+
 # Get base color
 def get_base_color(color_string = None):
 
@@ -235,6 +250,7 @@ def main():
             parser.error('Pixelation value must be set in form: 42x42')
 
     # Main routine
+    print_logo()
     base_color = get_base_color(color)
     c1, c2, c3, c4 = create_colors(base_color)
     image = create_base_image(c1, c2, c3, c4)
