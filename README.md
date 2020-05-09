@@ -48,7 +48,7 @@ Install the python requirements with `pip install -r requirements.txt`.
                             file where to save the huepaper to (default: None)
       -l [LINES], --lines [LINES]
                             include one to three random lines in base color with
-                            given opacity in range [0, 1] (default: 0.1)
+                            given opacity in range [0, 1] (default: 0.3)
       -lb [LINES_BRIGHT], --lines_bright [LINES_BRIGHT]
                             include one to three bright random lines with given
                             opacity in range [0, 1] (default: 0.1)

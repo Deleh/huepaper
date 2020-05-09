@@ -209,7 +209,7 @@ def main():
     parser.add_argument('-c', '--color', help = 'color, the huepaper is generated from (uses a random color if not given)')
     parser.add_argument('-p', '--preview', action = 'store_true', help = 'preview huepaper')
     parser.add_argument('-o', '--output', help = 'file where to save the huepaper to (default: None)')
-    parser.add_argument('-l', '--lines', nargs = '?', const = 0.1, type = float, help = 'include one to three random lines in base color with given opacity in range [0, 1] (default: 0.1)')
+    parser.add_argument('-l', '--lines', nargs = '?', const = 0.3, type = float, help = 'include one to three random lines in base color with given opacity in range [0, 1] (default: 0.3)')
     parser.add_argument('-lb', '--lines_bright', nargs = '?', const = 0.1, type = float, help = 'include one to three bright random lines with given opacity in range [0, 1] (default: 0.1)')
     parser.add_argument('-ld', '--lines_dark', nargs = '?', const = 0.1, type = float, help = 'include one to three dark random lines with given opacity in range [0, 1] (default: 0.1)')
     parser.add_argument('-P', '--pixelate', help = "pixelate image (e.g. 42x42)")
