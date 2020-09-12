@@ -6,6 +6,10 @@
 This is the literate programming file for =huepaper.py=.
 To export it, open it in *Emacs* and *tangle* it.
 
+** TODO Update to new code
+
+Somehow old code was copied in here. Fix it! 
+
 ** Imports
 
 huepaper is mainly based on two libraries.
@@ -25,7 +29,7 @@ huepaper is mainly based on two libraries.
 Every huepaper has a base color.
 It is used to calculate the final colors.
 
-If a base color is given by the user, it can have every form, Colour supports.
+If a base color is given by the user, it can have every format, Colour supports.
 If no color is given, a random one is chosen.
 
 #+BEGIN_SRC python
@@ -53,7 +57,7 @@ If no color is given, a random one is chosen.
 ** Colors
 
 The final color limits for each edge of the huepaper are calculated with respect to the base color.
-They rely also on the given input parameters such as saturation and luminance..
+They rely also on the given input parameters such as saturation and luminance.
 Those decide how much the colors differ from the base color.
 
 #+BEGIN_SRC python
@@ -83,10 +87,13 @@ Those decide how much the colors differ from the base color.
       return tuple(colors)
 #+END_SRC
 
-** Rest
+** Base image
+
+The base image is a rectangle with the given height and width.
+The colors of the edges are the four calculated colors.
+All other pixel colors are linear interpolated.
 
 #+BEGIN_SRC python
-  # Create base image from four colors, width and height
   # c1 - top left
   # c2 - top right
   # c3 - bottom right
@@ -109,15 +116,19 @@ Those decide how much the colors differ from the base color.
       # Create image
       image = Image.new('RGBA', (width, height))
       pixels = image.load()
-    
+
       for x in range(0, width):
           for y in range(0, height):
               pixels[x, y] = col(x / (width - 1), y / (height - 1))
 
       return image
+#+END_SRC
 
+** Lines
 
-  # Add lines to an image
+Vertical lines can be added on the side of the huepaper.
+
+#+BEGIN_SRC python
   def add_lines(image, color):
 
       line_image = Image.new('RGBA', (width, height), (0, 0, 0, 0))
@@ -146,20 +157,30 @@ Those decide how much the colors differ from the base color.
 
       # Add line image to input image
       image.alpha_composite(line_image, (0, 0))
-    
+
       return image
+#+END_SRC
 
+** Pixelation
 
-  # Add pixelation to image
+The huepaper can be pixelated.
+This is realized by scaling.
+
+#+BEGIN_SRC python
   def add_pixelation(image, x, y):
 
       image = image.resize((x, y))
       image = image.resize((width, height), Image.BOX)
 
       return image
+#+END_SRC
 
+** Emblem
 
-  # Add emblem to an image from a filepath
+A huepaper can have an emblem.
+This is loaded from a file and placed in the center.
+
+#+BEGIN_SRC python
   def add_emblem(image, filepath):
 
       # Load image
@@ -179,9 +200,14 @@ Those decide how much the colors differ from the base color.
       image.alpha_composite(emblem_image, offset)
 
       return image
+#+END_SRC
 
+** Save
 
-  # Save image to filepath
+huepapers can be saved to a filepath.
+Already existing files are only overwritten if the user wants to.
+
+#+BEGIN_SRC python
   def save_image(filepath, image):
 
       save = True
@@ -206,17 +232,20 @@ Those decide how much the colors differ from the base color.
                       stop = True
                   else:
                       filepath = input('Please enter new path where the wallpaper shall be saved: ')
+#+END_SRC
 
+** Main
 
-  '''
-  Main
-  '''
-
+#+BEGIN_SRC python
   def main():
-
       global width, height, max_hue, sat_min, sat_max, lum_min, lum_max
+#+END_SRC
 
-      # Initialize parser
+*** Arguments
+
+The script has various arguments which are used to create the huepaper.
+
+#+BEGIN_SRC python
       parser = argparse.ArgumentParser(description = 'Create wallpapers based on color hues.')
       parser.add_argument('-W', '--width', default = 1920, type = int, help = 'width of wallpaper (defaul: 1920)')
       parser.add_argument('-H', '--height', default = 1080, type = int, help = 'height of wallpaper (default: 1080)')
@@ -262,8 +291,11 @@ Those decide how much the colors differ from the base color.
               py = int(values[1])
           except:
               parser.error('Pixelation value must be set in form: 42x42')
+#+END_SRC
 
-      # Main routine
+*** Routine
+
+#+BEGIN_SRC python
       base_color = get_base_color(color)
       c1, c2, c3, c4 = create_colors(base_color)
       image = create_base_image(c1, c2, c3, c4)
@@ -277,7 +309,7 @@ Those decide how much the colors differ from the base color.
 
       if pixelate:
           image = add_pixelation(image, px, py)
-        
+
       if emblem:
           image = add_emblem(image, emblem)
 
@@ -291,7 +323,7 @@ Those decide how much the colors differ from the base color.
 
       if output:
           save_image(output, image)
-       
+
 
   if __name__ == '__main__':
       main()
