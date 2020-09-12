@@ -8,6 +8,21 @@ from colour import Color
 from PIL import Image, ImageDraw, ImageOps
 
 
+def print_logo():
+    logo = '''
+ .lk.
+  cO.
+  cO.;:lc.  ,c.  .cc   .,',c;  .,c.;coc.   ;,.,c.  ':l.:lo:    '',:c.  '::.lo. 
+  cO'   kd  .O;   dO  ,x...,Ox  cO;   lO: ;x   xk   OO.  .kO. x;...x0'  0x. .  
+  cO.   xx  .O;   dO  ko......  :O.    Ox  .,..xO   kk    ;0;;0......   0d     
+  cO.   xx  .O;   xO  dO.    .. :O.   .O; dk   xO   kk    :O.'0o     ,  0d     
+ .dk,  .kk.  okc;,ox'  ckxllc.  :Oc'.,l'  oOl;'dO:. kO;..:l.  ,xOolc;  ,Ox.    
+                                :O.                 kk                         
+                                lO,                 OO                         
+ OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO00O0000000000000000; 
+''';
+    print(logo)
+
 # Get base color
 def get_base_color(color_string = None):
 
@@ -189,16 +204,16 @@ def main():
 
     # Initialize parser
     parser = argparse.ArgumentParser(description = 'Create wallpapers based on color hues.')
-    parser.add_argument('-W', '--width', default = 1920, type = int, help = 'width of wallpaper (defaul: 1920)')
-    parser.add_argument('-H', '--height', default = 1080, type = int, help = 'height of wallpaper (default: 1080)')
-    parser.add_argument('-c', '--color', help = 'color, the wallpaper is generated from (uses a random color if not given)')
-    parser.add_argument('-p', '--preview', action = 'store_true', help = 'preview wallpaper')
-    parser.add_argument('-o', '--output', help = 'file where to save the wallpaper to (default: None)')
-    parser.add_argument('-l', '--lines', nargs = '?', const = 0.1, type = float, help = 'include one to three random lines in base color with given opacity in range [0, 1] (default: 0.1)')
+    parser.add_argument('-W', '--width', default = 1920, type = int, help = 'width of huepaper (default: 1920)')
+    parser.add_argument('-H', '--height', default = 1080, type = int, help = 'height of huepaper (default: 1080)')
+    parser.add_argument('-c', '--color', help = 'color, the huepaper is generated from (uses a random color if not given)')
+    parser.add_argument('-p', '--preview', action = 'store_true', help = 'preview huepaper')
+    parser.add_argument('-o', '--output', help = 'file where to save the huepaper to (default: None)')
+    parser.add_argument('-l', '--lines', nargs = '?', const = 0.3, type = float, help = 'include one to three random lines in base color with given opacity in range [0, 1] (default: 0.3)')
     parser.add_argument('-lb', '--lines_bright', nargs = '?', const = 0.1, type = float, help = 'include one to three bright random lines with given opacity in range [0, 1] (default: 0.1)')
     parser.add_argument('-ld', '--lines_dark', nargs = '?', const = 0.1, type = float, help = 'include one to three dark random lines with given opacity in range [0, 1] (default: 0.1)')
     parser.add_argument('-P', '--pixelate', help = "pixelate image (e.g. 42x42)")
-    parser.add_argument('-e', '--emblem', help = 'emblem to add in the center of the wallpaper')
+    parser.add_argument('-e', '--emblem', help = 'emblem to add in the center of the huepaper')
     parser.add_argument('-hue', default = 0.1, type = float, help = 'maximum hue to differ from given color in range [0, 1] (default: 0.1)')
     parser.add_argument('-smin', default = 0.2, type = float, help = 'minimum satisfaction for colors in range [0, 1] (default: 0.2)')
     parser.add_argument('-smax', default = 1.0, type = float, help = 'maximum satisfaction for colors in range [0, 1] (default: 1.0)')
@@ -235,6 +250,7 @@ def main():
             parser.error('Pixelation value must be set in form: 42x42')
 
     # Main routine
+    print_logo()
     base_color = get_base_color(color)
     c1, c2, c3, c4 = create_colors(base_color)
     image = create_base_image(c1, c2, c3, c4)
@@ -251,6 +267,8 @@ def main():
         
     if emblem:
         image = add_emblem(image, emblem)
+
+    image.mode = 'RGB'
 
     if preview:
         image.show()

@@ -2,9 +2,13 @@
 
 ![Logo](./images/logo.png)
 
-**huepaper** creates wallpapers based on color hues. Bring a little
-color in your life by randomness, because every huepaper is truly
-unique.
+**huepaper** creates colorful wallpapers, using the [HSL color
+space](https://en.wikipedia.org/wiki/HSL_and_HSV). It is based on
+[**colour**](https://github.com/vaab/colour) and
+[**pillow**](https://python-pillow.org/).
+
+Every *huepaper* is randomly generated and therefore truly unique. Let
+randomness bring a little color in your life.
 
 You can find [examples](#examples) below.
 
@@ -33,18 +37,18 @@ Install the python requirements with `pip install -r requirements.txt`.
     optional arguments:
       -h, --help            show this help message and exit
       -W WIDTH, --width WIDTH
-                            width of wallpaper (defaul: 1920)
+                            width of huepaper (default: 1920)
       -H HEIGHT, --height HEIGHT
-                            height of wallpaper (default: 1080)
+                            height of huepaper (default: 1080)
       -c COLOR, --color COLOR
-                            color, the wallpaper is generated from (uses a random
+                            color, the huepaper is generated from (uses a random
                             color if not given)
-      -p, --preview         preview wallpaper
+      -p, --preview         preview huepaper
       -o OUTPUT, --output OUTPUT
-                            file where to save the wallpaper to (default: None)
+                            file where to save the huepaper to (default: None)
       -l [LINES], --lines [LINES]
                             include one to three random lines in base color with
-                            given opacity in range [0, 1] (default: 0.1)
+                            given opacity in range [0, 1] (default: 0.3)
       -lb [LINES_BRIGHT], --lines_bright [LINES_BRIGHT]
                             include one to three bright random lines with given
                             opacity in range [0, 1] (default: 0.1)
@@ -54,7 +58,7 @@ Install the python requirements with `pip install -r requirements.txt`.
       -P PIXELATE, --pixelate PIXELATE
                             pixelate image (e.g. 42x42)
       -e EMBLEM, --emblem EMBLEM
-                            emblem to add in the center of the wallpaper
+                            emblem to add in the center of the huepaper
       -hue HUE              maximum hue to differ from given color in range [0, 1]
                             (default: 0.1)
       -smin SMIN            minimum satisfaction for colors in range [0, 1]
