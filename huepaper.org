@@ -26,7 +26,7 @@ The logo of huepaper is printed on startup.
 
 #+BEGIN_SRC python
   def print_logo():
-      logo = '''
+      logo = """
    .lk.
     cO.
     cO.;:lc.  ,c.  .cc   .,',c;  .,c.;coc.   ;,.,c.  ':l.:lo:    '',:c.  '::.lo. 
@@ -37,12 +37,11 @@ The logo of huepaper is printed on startup.
                                   :O.                 kk                         
                                   lO,                 OO                         
    OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO00O0000000000000000; 
-  ''';
+  """
       print(logo)
 #+END_SRC
 
 ** Base color
-
 
 Every huepaper has a base color.
 It is used to calculate the final colors.
@@ -51,22 +50,22 @@ If a base color is given by the user, it can have every format, Colour supports.
 If no color is given, a random one is chosen.
 
 #+BEGIN_SRC python
-  def get_base_color(color_string = None):
+  def get_base_color(color_string=None):
 
       # If no color string is given, create a random color
       if not color_string:
           hue = random.uniform(0, 1)
           sat = random.uniform(sat_min, sat_max)
           lum = random.uniform(lum_min, lum_max)
-          base_color = Color(hue = hue, saturation = sat, luminance = lum)
-          print('Selected random base color: {}'.format(base_color.hex))
+          base_color = Color(hue=hue, saturation=sat, luminance=lum)
+          print("Selected random base color: {}".format(base_color.hex))
 
       # Else try to parse string
       else:
           try:
               base_color = Color(color_string)
           except:
-              print('Not a valid color expression: {}'.format(color_string))
+              print("Not a valid color expression: {}".format(color_string))
               sys.exit(1)
 
       return base_color
@@ -82,7 +81,7 @@ Those decide how much the colors differ from the base color.
   def create_colors(base_color):
 
       colors = []
-    
+
       max_sat_diff = 0.1
       max_lum_diff = 0.1
 
@@ -95,11 +94,11 @@ Those decide how much the colors differ from the base color.
 
           tmp_sat = base_color.saturation + random.uniform(-max_sat_diff, max_sat_diff)
           tmp_sat = min(sat_max, max(sat_min, tmp_sat))
-        
+
           tmp_lum = base_color.luminance + random.uniform(-max_lum_diff, max_lum_diff)
           tmp_lum = min(lum_max, max(lum_min, tmp_lum))
 
-          color = Color(hue = tmp_hue, saturation = tmp_sat, luminance = tmp_lum)
+          color = Color(hue=tmp_hue, saturation=tmp_sat, luminance=tmp_lum)
           colors.append(color.rgb)
 
       return tuple(colors)
@@ -119,22 +118,33 @@ All other pixel colors are linear interpolated.
   def create_base_image(c1, c2, c3, c4):
 
       # Lambda for adding four colors
-      add = lambda c1, c2, c3, c4 : (c1[0] + c2[0] + c3[0] + c4[0], c1[1] + c2[1] + c3[1] + c4[1], c1[2] + c2[2] + c3[2] + c4[2])
+      add = lambda c1, c2, c3, c4: (
+          c1[0] + c2[0] + c3[0] + c4[0],
+          c1[1] + c2[1] + c3[1] + c4[1],
+          c1[2] + c2[2] + c3[2] + c4[2],
+      )
 
       # Lambda for multiplying a color with a factor
-      mul = lambda c, x : (c[0] * x, c[1] * x, c[2] * x)
+      mul = lambda c, x: (c[0] * x, c[1] * x, c[2] * x)
 
       # Lambda for scaling a color from [0 , 1] to [0, 255]
-      cor = lambda c : (int(c[0] * 255), int(c[1] * 255), int(c[2] * 255))
+      cor = lambda c: (int(c[0] * 255), int(c[1] * 255), int(c[2] * 255))
 
       # Lambda for calculating a color at x and y in range [0, 1]
       #  Color limits are set at creation
-      col = lambda x, y, c1 = c1, c2 = c2, c3 = c3, c4 = c4 : cor(add(mul(c1, (1.0 - x) * (1.0 - y)), mul(c2, x * (1.0 - y)), mul(c3, x * y), mul(c4, (1.0 - x) * y)))
+      col = lambda x, y, c1=c1, c2=c2, c3=c3, c4=c4: cor(
+          add(
+              mul(c1, (1.0 - x) * (1.0 - y)),
+              mul(c2, x * (1.0 - y)),
+              mul(c3, x * y),
+              mul(c4, (1.0 - x) * y),
+          )
+      )
 
       # Create image
-      image = Image.new('RGBA', (width, height))
+      image = Image.new("RGBA", (width, height))
       pixels = image.load()
-    
+
       for x in range(0, width):
           for y in range(0, height):
               pixels[x, y] = col(x / (width - 1), y / (height - 1))
@@ -149,23 +159,25 @@ Vertical lines can be added on the side of the huepaper.
 #+BEGIN_SRC python
   def add_lines(image, color):
 
-      line_image = Image.new('RGBA', (width, height), (0, 0, 0, 0))
+      line_image = Image.new("RGBA", (width, height), (0, 0, 0, 0))
       draw = ImageDraw.Draw(line_image)
 
       # Set color
-      color = tuple(map(lambda x : int(x * 255), color))
+      color = tuple(map(lambda x: int(x * 255), color))
 
       # Generate lines
       number_of_lines = random.randint(1, 3)
       scale = width / 100.0
       base_width = random.randint(int(2 * scale), int(5 * scale))
-      rand_width = lambda base_width = base_width : base_width + random.randint(-base_width // 2, base_width // 2)
+      rand_width = lambda base_width=base_width: base_width + random.randint(
+          -base_width // 2, base_width // 2
+      )
       space = rand_width() // 2
       offset = random.randint(0, space)
       for i in range(0, number_of_lines):
           line_width = rand_width()
           x = offset + space + (line_width // 2)
-          draw.line((x, 0, x, height), fill = color, width = line_width)
+          draw.line((x, 0, x, height), fill=color, width=line_width)
           offset += space + line_width
 
       # Mirror line image eventually
@@ -175,7 +187,7 @@ Vertical lines can be added on the side of the huepaper.
 
       # Add line image to input image
       image.alpha_composite(line_image, (0, 0))
-    
+
       return image
 #+END_SRC
 
@@ -205,16 +217,19 @@ This is loaded from a file and placed in the center.
       try:
           emblem_image = Image.open(filepath)
       except Exception as e:
-          print('Failed to load emblem: {}'.format(e))
+          print("Failed to load emblem: {}".format(e))
           sys.exit(1)
 
       # Exit if emblem is too big
       if emblem_image.size[0] > width or emblem_image.size[1] > height:
-          print('Emblem can\'t be bigger than the wallpaper')
+          print("Emblem can't be bigger than the wallpaper")
           sys.exit(1)
 
       # Insert emblem in the center
-      offset = ((image.size[0] - emblem_image.size[0]) // 2, (image.size[1] - emblem_image.size[1]) // 2)
+      offset = (
+          (image.size[0] - emblem_image.size[0]) // 2,
+          (image.size[1] - emblem_image.size[1]) // 2,
+      )
       image.alpha_composite(emblem_image, offset)
 
       return image
@@ -232,8 +247,12 @@ Already existing files are only overwritten if the user wants to.
 
       # Check whether file exists
       if os.path.isfile(filepath):
-          overwrite = input('The file {} already exists. Do you want to overwrite it? [y/N] '.format(filepath))
-          if overwrite != 'y' and overwrite != 'Y':
+          overwrite = input(
+              "The file {} already exists. Do you want to overwrite it? [y/N] ".format(
+                  filepath
+              )
+          )
+          if overwrite != "y" and overwrite != "Y":
               save = False
 
       if save:
@@ -244,12 +263,14 @@ Already existing files are only overwritten if the user wants to.
                   image.save(filepath)
                   stop = True
               except Exception as e:
-                  print('Failed to save wallpaper: {}'.format(e))
-                  again = input('Do you want to try again? [Y/n] ')
-                  if again == 'n' or again == 'N':
+                  print("Failed to save wallpaper: {}".format(e))
+                  again = input("Do you want to try again? [Y/n] ")
+                  if again == "n" or again == "N":
                       stop = True
                   else:
-                      filepath = input('Please enter new path where the wallpaper shall be saved: ')
+                      filepath = input(
+                          "Please enter new path where the wallpaper shall be saved: "
+                      )
 #+END_SRC
 
 ** Main
@@ -261,27 +282,92 @@ In the main routine, the arguments are parsed and the image is created.
 
       global width, height, max_hue, sat_min, sat_max, lum_min, lum_max
 
-      parser = argparse.ArgumentParser(description = 'Create wallpapers based on color hues.')
-      parser.add_argument('-W', '--width', default = 1920, type = int, help = 'width of huepaper (default: 1920)')
-      parser.add_argument('-H', '--height', default = 1080, type = int, help = 'height of huepaper (default: 1080)')
-      parser.add_argument('-c', '--color', help = 'color, the huepaper is generated from (uses a random color if not given)')
-      parser.add_argument('-p', '--preview', action = 'store_true', help = 'preview huepaper')
-      parser.add_argument('-o', '--output', help = 'file where to save the huepaper to (default: None)')
-      parser.add_argument('-l', '--lines', nargs = '?', const = 0.3, type = float, help = 'include one to three random lines in base color with given opacity in range [0, 1] (default: 0.3)')
-      parser.add_argument('-lb', '--lines_bright', nargs = '?', const = 0.1, type = float, help = 'include one to three bright random lines with given opacity in range [0, 1] (default: 0.1)')
-      parser.add_argument('-ld', '--lines_dark', nargs = '?', const = 0.1, type = float, help = 'include one to three dark random lines with given opacity in range [0, 1] (default: 0.1)')
-      parser.add_argument('-P', '--pixelate', help = "pixelate image (e.g. 42x42)")
-      parser.add_argument('-e', '--emblem', help = 'emblem to add in the center of the huepaper')
-      parser.add_argument('-hue', default = 0.1, type = float, help = 'maximum hue to differ from given color in range [0, 1] (default: 0.1)')
-      parser.add_argument('-smin', default = 0.2, type = float, help = 'minimum satisfaction for colors in range [0, 1] (default: 0.2)')
-      parser.add_argument('-smax', default = 1.0, type = float, help = 'maximum satisfaction for colors in range [0, 1] (default: 1.0)')
-      parser.add_argument('-lmin', default = 0.2, type = float, help = 'minimum luminance for colors in range [0, 1] (default: 0.2)')
-      parser.add_argument('-lmax', default = 0.9, type = float, help = 'maximum luminance for colors in range [0, 1] (default: 0.9)')
+      parser = argparse.ArgumentParser(
+          description="Create wallpapers based on color hues."
+      )
+      parser.add_argument(
+          "-s",
+          "--size",
+          default="1920x1080",
+          help="size of huepaper in the form WIDTHxHEIGHT (default: 1920x1080)",
+      )
+      parser.add_argument(
+          "-c",
+          "--color",
+          help="color, the huepaper is generated from (uses a random color if not given)",
+      )
+      parser.add_argument("-p", "--preview", action="store_true", help="preview huepaper")
+      parser.add_argument(
+          "-o", "--output", help="file where to save the huepaper to (default: None)"
+      )
+      parser.add_argument(
+          "-l",
+          "--lines",
+          nargs="?",
+          const=0.3,
+          type=float,
+          help="include one to three random lines in base color with given opacity in range [0, 1] (default: 0.3)",
+      )
+      parser.add_argument(
+          "-lb",
+          "--lines_bright",
+          nargs="?",
+          const=0.1,
+          type=float,
+          help="include one to three bright random lines with given opacity in range [0, 1] (default: 0.1)",
+      )
+      parser.add_argument(
+          "-ld",
+          "--lines_dark",
+          nargs="?",
+          const=0.1,
+          type=float,
+          help="include one to three dark random lines with given opacity in range [0, 1] (default: 0.1)",
+      )
+      parser.add_argument(
+          "-P",
+          "--pixelate",
+          nargs="?",
+          const="16x9",
+          help="pixelate image with WIDTHxHEIGHT (default: 16x9)",
+      )
+      parser.add_argument(
+          "-e", "--emblem", help="emblem to add in the center of the huepaper"
+      )
+      parser.add_argument(
+          "-hue",
+          default=0.1,
+          type=float,
+          help="maximum hue to differ from given color in range [0, 1] (default: 0.1)",
+      )
+      parser.add_argument(
+          "-smin",
+          default=0.2,
+          type=float,
+          help="minimum satisfaction for colors in range [0, 1] (default: 0.2)",
+      )
+      parser.add_argument(
+          "-smax",
+          default=1.0,
+          type=float,
+          help="maximum satisfaction for colors in range [0, 1] (default: 1.0)",
+      )
+      parser.add_argument(
+          "-lmin",
+          default=0.2,
+          type=float,
+          help="minimum luminance for colors in range [0, 1] (default: 0.2)",
+      )
+      parser.add_argument(
+          "-lmax",
+          default=0.9,
+          type=float,
+          help="maximum luminance for colors in range [0, 1] (default: 0.9)",
+      )
 
       # Get args
       args = parser.parse_args()
-      width = args.width
-      height = args.height
+      size = args.size
       color = args.color
       preview = args.preview
       output = args.output
@@ -296,16 +382,24 @@ In the main routine, the arguments are parsed and the image is created.
       lum_min = args.lmin
       lum_max = args.lmax
 
+      # Get size
+      try:
+          values = size.split("x")
+          width = int(values[0])
+          height = int(values[1])
+      except:
+          parser.error("The size must be given in form: 1920x1080")
+
       # Check preconditions
       if not preview and not output:
-          parser.error('You must either set -p (--preview) or -o (--output)')
+          parser.error("You must either set -p (--preview) or -o (--output)")
       if pixelate:
           try:
-              values = pixelate.split('x')
+              values = pixelate.split("x")
               px = int(values[0])
               py = int(values[1])
           except:
-              parser.error('Pixelation value must be set in form: 42x42')
+              parser.error("Pixelation value must be set in form: 42x42")
 
       print_logo()
       base_color = get_base_color(color)
@@ -321,24 +415,24 @@ In the main routine, the arguments are parsed and the image is created.
 
       if pixelate:
           image = add_pixelation(image, px, py)
-        
+
       if emblem:
           image = add_emblem(image, emblem)
 
-      image.mode = 'RGB'
+      image.mode = "RGB"
 
       if preview:
           image.show()
           if not output:
-              save = input('Do you want to save the image? [y/N] ')
-              if save == 'y' or save == 'Y':
-                  path = input('Enter the path where the wallpaper shall be saved: ')
+              save = input("Do you want to save the image? [y/N] ")
+              if save == "y" or save == "Y":
+                  path = input("Enter the path where the wallpaper shall be saved: ")
                   save_image(path, image)
 
       if output:
           save_image(output, image)
-       
 
-  if __name__ == '__main__':
+
+  if __name__ == "__main__":
       main()
 #+END_SRC
