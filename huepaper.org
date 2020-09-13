@@ -1,14 +1,10 @@
 * huepaper
 :PROPERTIES:
-:header-args: :tangle huepaper_tangled.py :shebang "#!/usr/bin/env python"
+:header-args: :tangle huepaper.py :shebang "#!/usr/bin/env python"
 :END:
 
 This is the literate programming file for =huepaper.py=.
 To export it, open it in *Emacs* and *tangle* it.
-
-** TODO Update to new code
-
-Somehow old code was copied in here. Fix it! 
 
 ** Imports
 
@@ -24,7 +20,29 @@ huepaper is mainly based on two libraries.
   from PIL import Image, ImageDraw, ImageOps
 #+END_SRC
 
+** Logo
+
+The logo of huepaper is printed on startup.
+
+#+BEGIN_SRC python
+  def print_logo():
+      logo = '''
+   .lk.
+    cO.
+    cO.;:lc.  ,c.  .cc   .,',c;  .,c.;coc.   ;,.,c.  ':l.:lo:    '',:c.  '::.lo. 
+    cO'   kd  .O;   dO  ,x...,Ox  cO;   lO: ;x   xk   OO.  .kO. x;...x0'  0x. .  
+    cO.   xx  .O;   dO  ko......  :O.    Ox  .,..xO   kk    ;0;;0......   0d     
+    cO.   xx  .O;   xO  dO.    .. :O.   .O; dk   xO   kk    :O.'0o     ,  0d     
+   .dk,  .kk.  okc;,ox'  ckxllc.  :Oc'.,l'  oOl;'dO:. kO;..:l.  ,xOolc;  ,Ox.    
+                                  :O.                 kk                         
+                                  lO,                 OO                         
+   OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO00O0000000000000000; 
+  ''';
+      print(logo)
+#+END_SRC
+
 ** Base color
+
 
 Every huepaper has a base color.
 It is used to calculate the final colors.
@@ -33,7 +51,7 @@ If a base color is given by the user, it can have every format, Colour supports.
 If no color is given, a random one is chosen.
 
 #+BEGIN_SRC python
-    def get_base_color(color_string = None):
+  def get_base_color(color_string = None):
 
       # If no color string is given, create a random color
       if not color_string:
@@ -116,7 +134,7 @@ All other pixel colors are linear interpolated.
       # Create image
       image = Image.new('RGBA', (width, height))
       pixels = image.load()
-
+    
       for x in range(0, width):
           for y in range(0, height):
               pixels[x, y] = col(x / (width - 1), y / (height - 1))
@@ -157,7 +175,7 @@ Vertical lines can be added on the side of the huepaper.
 
       # Add line image to input image
       image.alpha_composite(line_image, (0, 0))
-
+    
       return image
 #+END_SRC
 
@@ -236,27 +254,24 @@ Already existing files are only overwritten if the user wants to.
 
 ** Main
 
+In the main routine, the arguments are parsed and the image is created.
+
 #+BEGIN_SRC python
   def main():
+
       global width, height, max_hue, sat_min, sat_max, lum_min, lum_max
-#+END_SRC
 
-*** Arguments
-
-The script has various arguments which are used to create the huepaper.
-
-#+BEGIN_SRC python
       parser = argparse.ArgumentParser(description = 'Create wallpapers based on color hues.')
-      parser.add_argument('-W', '--width', default = 1920, type = int, help = 'width of wallpaper (defaul: 1920)')
-      parser.add_argument('-H', '--height', default = 1080, type = int, help = 'height of wallpaper (default: 1080)')
-      parser.add_argument('-c', '--color', help = 'color, the wallpaper is generated from (uses a random color if not given)')
-      parser.add_argument('-p', '--preview', action = 'store_true', help = 'preview wallpaper')
-      parser.add_argument('-o', '--output', help = 'file where to save the wallpaper to (default: None)')
-      parser.add_argument('-l', '--lines', nargs = '?', const = 0.1, type = float, help = 'include one to three random lines in base color with given opacity in range [0, 1] (default: 0.1)')
+      parser.add_argument('-W', '--width', default = 1920, type = int, help = 'width of huepaper (default: 1920)')
+      parser.add_argument('-H', '--height', default = 1080, type = int, help = 'height of huepaper (default: 1080)')
+      parser.add_argument('-c', '--color', help = 'color, the huepaper is generated from (uses a random color if not given)')
+      parser.add_argument('-p', '--preview', action = 'store_true', help = 'preview huepaper')
+      parser.add_argument('-o', '--output', help = 'file where to save the huepaper to (default: None)')
+      parser.add_argument('-l', '--lines', nargs = '?', const = 0.3, type = float, help = 'include one to three random lines in base color with given opacity in range [0, 1] (default: 0.3)')
       parser.add_argument('-lb', '--lines_bright', nargs = '?', const = 0.1, type = float, help = 'include one to three bright random lines with given opacity in range [0, 1] (default: 0.1)')
       parser.add_argument('-ld', '--lines_dark', nargs = '?', const = 0.1, type = float, help = 'include one to three dark random lines with given opacity in range [0, 1] (default: 0.1)')
       parser.add_argument('-P', '--pixelate', help = "pixelate image (e.g. 42x42)")
-      parser.add_argument('-e', '--emblem', help = 'emblem to add in the center of the wallpaper')
+      parser.add_argument('-e', '--emblem', help = 'emblem to add in the center of the huepaper')
       parser.add_argument('-hue', default = 0.1, type = float, help = 'maximum hue to differ from given color in range [0, 1] (default: 0.1)')
       parser.add_argument('-smin', default = 0.2, type = float, help = 'minimum satisfaction for colors in range [0, 1] (default: 0.2)')
       parser.add_argument('-smax', default = 1.0, type = float, help = 'maximum satisfaction for colors in range [0, 1] (default: 1.0)')
@@ -291,11 +306,8 @@ The script has various arguments which are used to create the huepaper.
               py = int(values[1])
           except:
               parser.error('Pixelation value must be set in form: 42x42')
-#+END_SRC
 
-*** Routine
-
-#+BEGIN_SRC python
+      print_logo()
       base_color = get_base_color(color)
       c1, c2, c3, c4 = create_colors(base_color)
       image = create_base_image(c1, c2, c3, c4)
@@ -309,9 +321,11 @@ The script has various arguments which are used to create the huepaper.
 
       if pixelate:
           image = add_pixelation(image, px, py)
-
+        
       if emblem:
           image = add_emblem(image, emblem)
+
+      image.mode = 'RGB'
 
       if preview:
           image.show()
@@ -323,7 +337,7 @@ The script has various arguments which are used to create the huepaper.
 
       if output:
           save_image(output, image)
-
+       
 
   if __name__ == '__main__':
       main()

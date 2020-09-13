@@ -1,12 +1,10 @@
 #!/usr/bin/env python
-
 import argparse
 import os.path
 import random
 import sys
 from colour import Color
 from PIL import Image, ImageDraw, ImageOps
-
 
 def print_logo():
     logo = '''
@@ -23,7 +21,6 @@ def print_logo():
 ''';
     print(logo)
 
-# Get base color
 def get_base_color(color_string = None):
 
     # If no color string is given, create a random color
@@ -44,12 +41,10 @@ def get_base_color(color_string = None):
 
     return base_color
 
-
-# Create colors from a base color
 def create_colors(base_color):
 
     colors = []
-    
+
     max_sat_diff = 0.1
     max_lum_diff = 0.1
 
@@ -62,7 +57,7 @@ def create_colors(base_color):
 
         tmp_sat = base_color.saturation + random.uniform(-max_sat_diff, max_sat_diff)
         tmp_sat = min(sat_max, max(sat_min, tmp_sat))
-        
+
         tmp_lum = base_color.luminance + random.uniform(-max_lum_diff, max_lum_diff)
         tmp_lum = min(lum_max, max(lum_min, tmp_lum))
 
@@ -71,8 +66,6 @@ def create_colors(base_color):
 
     return tuple(colors)
 
-
-# Create base image from four colors, width and height
 # c1 - top left
 # c2 - top right
 # c3 - bottom right
@@ -95,15 +88,13 @@ def create_base_image(c1, c2, c3, c4):
     # Create image
     image = Image.new('RGBA', (width, height))
     pixels = image.load()
-    
+
     for x in range(0, width):
         for y in range(0, height):
             pixels[x, y] = col(x / (width - 1), y / (height - 1))
 
     return image
 
-
-# Add lines to an image
 def add_lines(image, color):
 
     line_image = Image.new('RGBA', (width, height), (0, 0, 0, 0))
@@ -132,11 +123,9 @@ def add_lines(image, color):
 
     # Add line image to input image
     image.alpha_composite(line_image, (0, 0))
-    
+
     return image
 
-
-# Add pixelation to image
 def add_pixelation(image, x, y):
 
     image = image.resize((x, y))
@@ -144,8 +133,6 @@ def add_pixelation(image, x, y):
 
     return image
 
-
-# Add emblem to an image from a filepath
 def add_emblem(image, filepath):
 
     # Load image
@@ -166,8 +153,6 @@ def add_emblem(image, filepath):
 
     return image
 
-
-# Save image to filepath
 def save_image(filepath, image):
 
     save = True
@@ -193,16 +178,10 @@ def save_image(filepath, image):
                 else:
                     filepath = input('Please enter new path where the wallpaper shall be saved: ')
 
-
-'''
-Main
-'''
-
 def main():
 
     global width, height, max_hue, sat_min, sat_max, lum_min, lum_max
 
-    # Initialize parser
     parser = argparse.ArgumentParser(description = 'Create wallpapers based on color hues.')
     parser.add_argument('-W', '--width', default = 1920, type = int, help = 'width of huepaper (default: 1920)')
     parser.add_argument('-H', '--height', default = 1080, type = int, help = 'height of huepaper (default: 1080)')
@@ -249,7 +228,6 @@ def main():
         except:
             parser.error('Pixelation value must be set in form: 42x42')
 
-    # Main routine
     print_logo()
     base_color = get_base_color(color)
     c1, c2, c3, c4 = create_colors(base_color)
@@ -264,7 +242,7 @@ def main():
 
     if pixelate:
         image = add_pixelation(image, px, py)
-        
+
     if emblem:
         image = add_emblem(image, emblem)
 
@@ -280,7 +258,7 @@ def main():
 
     if output:
         save_image(output, image)
-       
+
 
 if __name__ == '__main__':
     main()
