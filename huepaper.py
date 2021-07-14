@@ -1,10 +1,12 @@
 #!/usr/bin/env python
+
+from PIL import Image, ImageDraw, ImageOps
+from colour import Color
 import argparse
 import os.path
 import random
 import sys
-from colour import Color
-from PIL import Image, ImageDraw, ImageOps
+
 
 def print_logo():
     logo = """
@@ -21,7 +23,10 @@ def print_logo():
 """
     print(logo)
 
+
 def get_base_color(color_string=None):
+
+    global sat_min, sat_max, lum_min, lum_max
 
     # If no color string is given, create a random color
     if not color_string:
@@ -41,7 +46,10 @@ def get_base_color(color_string=None):
 
     return base_color
 
+
 def create_colors(base_color):
+
+    global max_hue, sat_min, sat_max, lum_min, lum_max
 
     colors = []
 
@@ -66,11 +74,14 @@ def create_colors(base_color):
 
     return tuple(colors)
 
+
 # c1 - top left
 # c2 - top right
 # c3 - bottom right
 # c4 - bottom left
 def create_base_image(c1, c2, c3, c4):
+
+    global width, height
 
     # Lambda for adding four colors
     add = lambda c1, c2, c3, c4: (
@@ -106,7 +117,10 @@ def create_base_image(c1, c2, c3, c4):
 
     return image
 
+
 def add_lines(image, color):
+
+    global width, height
 
     line_image = Image.new("RGBA", (width, height), (0, 0, 0, 0))
     draw = ImageDraw.Draw(line_image)
@@ -139,14 +153,20 @@ def add_lines(image, color):
 
     return image
 
+
 def add_pixelation(image, x, y):
+
+    global width, height
 
     image = image.resize((x, y))
     image = image.resize((width, height), Image.BOX)
 
     return image
 
+
 def add_emblem(image, filepath):
+
+    global width, height
 
     # Load image
     try:
@@ -168,6 +188,7 @@ def add_emblem(image, filepath):
     image.alpha_composite(emblem_image, offset)
 
     return image
+
 
 def save_image(filepath, image):
 
@@ -200,7 +221,8 @@ def save_image(filepath, image):
                         "Please enter new path where the wallpaper shall be saved: "
                     )
 
-def main():
+
+if __name__ == "__main__":
 
     global width, height, max_hue, sat_min, sat_max, lum_min, lum_max
 
@@ -353,7 +375,3 @@ def main():
 
     if output:
         save_image(output, image)
-
-
-if __name__ == "__main__":
-    main()
