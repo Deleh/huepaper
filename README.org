@@ -91,39 +91,39 @@
    #+caption: Huepaper 1
    [[./images/huepaper_1.png]]
 
-   =huepaper.py -p=
+   =huepaper -p=
 
    --------------
 
    #+caption: Huepaper 1
    [[./images/huepaper_2.png]]
 
-   =huepaper.py -p -c lightgreen=
+   =huepaper -p -c lightgreen=
 
    --------------
 
    #+caption: Huepaper 3
    [[./images/huepaper_3.png]]
 
-   =huepaper.py -p -c "#ff7f50" -lb 0.05=
+   =huepaper -p -c "#ff7f50" -lb 0.05=
 
    --------------
 
    #+caption: Huepaper 4
    [[./images/huepaper_4.png]]
 
-   =huepaper.py -p -hue 1.0 -lmin 0.3 -lmax 0.6 -smin 0.8 -smax 1.0=
+   =huepaper -p -hue 1.0 -lmin 0.3 -lmax 0.6 -smin 0.8 -smax 1.0=
 
    --------------
 
    #+caption: Huepaper 5
    [[./images/huepaper_5.png]]
 
-   =huepaper.py -p -hue 0.3 -lmin 0.5 -lmax 0.5 -l 0.5 -P 64x36=
+   =huepaper -p -hue 0.3 -lmin 0.5 -lmax 0.5 -l 0.5 -P 64x36=
 
    --------------
 
    #+caption: Huepaper 6
    [[./images/huepaper_6.png]]
 
-   =huepaper.py -p -l -lb -ld -e nixos.png=
+   =huepaper -p -l -lb -ld -e nixos.png=
