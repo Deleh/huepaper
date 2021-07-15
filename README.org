@@ -18,6 +18,8 @@
       nix run github:Deleh/huepaper -- --help
     #+end_example
 
+    Global installation can be done by including this flake in your flaked NixOS configuration as always :)
+
 *** Legacy
 
     Execute the following steps to run huepaper:
@@ -72,7 +74,7 @@
    Colors, similar to the given one are chosen.
    You can specify how far the colors differ in the hue range with the =-hue= parameter.
    Valid color expressions are e.g. =#F5F5DC=, =#0f0=, =ffff80= and =red=.
-   Make sure, that colors beginning with a =#= are encapsulated in quotes (="=).
+   Make sure, that colors beginning with a =#= are encapsulated in quotes.
    All supported color names can be seen [[https://www.w3schools.com/colors/colors_names.asp][here]].
 
    If you use the =-e= argument to specify an emblem, make sure it has the correct size.
