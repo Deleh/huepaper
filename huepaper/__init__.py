@@ -2,6 +2,7 @@
 
 from PIL import Image, ImageDraw, ImageOps
 from colour import Color
+import os.path
 import random
 
 
@@ -25,7 +26,7 @@ def get_base_color(
             try:
                 base_color = Color("#{}".format(color_string))
             except:
-                print("Not a valid color expression: {}".format(color_string))
+                print("Invalid color expression: {}".format(color_string))
                 exit(1)
 
     return base_color
