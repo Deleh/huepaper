@@ -9,21 +9,35 @@
 
 ** Installation
 
-   Until now there is no install method, just ways to call the script.
+*** Nix
 
-*** NixOS
+    This project is a [[https://nixos.wiki/wiki/Flakes][Nix Flake]].
+    If you have a recent version of the [[https://nixos.org/][Nix package manager]] installed and flakes are enabled, run huepaper like this:
 
-    Call =nix-shell= in the project directory. This will drop you into a python environment with all necessary requirements.
+    #+begin_example sh
+      nix run github:Deleh/huepaper -- --help
+    #+end_example
 
-*** LegacyOS
+*** Legacy
 
-    Install the python requirements with =pip install -r requirements.txt=.
+    Execute the following steps to run huepaper:
+
+    #+begin_example sh
+      pip install -r requirements.txt
+      ./huepaper.py --help
+    #+end_example
+
+    To install it in your Python environment run:
+
+    #+begin_example sh
+      python setup.py install
+    #+end_example
 
 ** Usage
 
-   #+begin_src text
-     usage: huepaper.py [-h] [-s SIZE] [-c COLOR] [-p] [-o OUTPUT] [-l [LINES]] [-lb [LINES_BRIGHT]] [-ld [LINES_DARK]]
-                        [-P [PIXELATE]] [-e EMBLEM] [-hue HUE] [-smin SMIN] [-smax SMAX] [-lmin LMIN] [-lmax LMAX]
+   #+begin_example text
+     usage: huepaper [-h] [-s SIZE] [-c COLOR] [-p] [-o OUTPUT] [-l [LINES]] [-lb [LINES_BRIGHT]] [-ld [LINES_DARK]] [-P [PIXELATE]] [-e EMBLEM] [-hue HUE] [-smin SMIN]
+                     [-smax SMAX] [-lmin LMIN] [-lmax LMAX]
 
      Create wallpapers based on color hues.
 
@@ -50,14 +64,14 @@
        -smax SMAX            maximum satisfaction for colors in range [0, 1] (default: 1.0)
        -lmin LMIN            minimum luminance for colors in range [0, 1] (default: 0.2)
        -lmax LMAX            maximum luminance for colors in range [0, 1] (default: 0.9)
-   #+end_src
+   #+end_example
 
    All image operations are called in order of the help file. E.g. pixelate (=-P=) is called after adding lines (=-l=).
 
    If you set the color via =-c= it is not guaranteed, that it is included in the huepaper.
    Colors, similar to the given one are chosen.
    You can specify how far the colors differ in the hue range with the =-hue= parameter.
-   Valid color expressions are e.g. =#F5F5DC=, =#0f0=, =ffff80= and =red=.
+   Valid color expressions are e.g. =#F5F5DC=, =#0f0=, =ffff80= and =red=.
    Make sure, that colors beginning with a =#= are encapsulated in quotes (="=).
    All supported color names can be seen [[https://www.w3schools.com/colors/colors_names.asp][here]].
 
@@ -111,7 +125,3 @@
    [[./images/huepaper_6.png]]
 
    =huepaper.py -p -l -lb -ld -e nixos.png=
-
-** Acknowledgements
-
-   Thanks to all the people who created the nice software, this project is based on.
