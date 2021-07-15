@@ -15,9 +15,15 @@
     If you have a recent version of the [[https://nixos.org/][Nix package manager]] installed and flakes are enabled, run huepaper like this:
 
     #+begin_example sh
-      nix run github:Deleh/huepaper -- --help
+      nix run github:Deleh/huepaper
     #+end_example
 
+    Parameters can be passed by appending a double-dash:
+
+    #+begin_example sh
+      nix run github:Deleh/huepaper -- -hue 0.5 --color lightblue
+    #+end_example
+    
     Global installation can be done by including this flake in your flaked NixOS configuration as always :)
 
 *** Legacy
@@ -26,7 +32,7 @@
 
     #+begin_example sh
       pip install -r requirements.txt
-      ./huepaper.py --help
+      ./huepaper.py
     #+end_example
 
     To install it in your Python environment run:
@@ -38,8 +44,7 @@
 ** Usage
 
    #+begin_example text
-     usage: huepaper [-h] [-s SIZE] [-c COLOR] [-p] [-o OUTPUT] [-l [LINES]] [-lb [LINES_BRIGHT]] [-ld [LINES_DARK]] [-P [PIXELATE]] [-e EMBLEM] [-hue HUE] [-smin SMIN]
-                     [-smax SMAX] [-lmin LMIN] [-lmax LMAX]
+     usage: huepaper [-h] [-s SIZE] [-c COLOR] [-np] [-o OUTPUT] [-l [LINES]] [-lb [LINES_BRIGHT]] [-ld [LINES_DARK]] [-P [PIXELATE]] [-e EMBLEM] [-hue HUE] [-smin SMIN] [-smax SMAX] [-lmin LMIN] [-lmax LMAX]
 
      Create wallpapers based on color hues.
 
@@ -47,10 +52,10 @@
        -h, --help            show this help message and exit
        -s SIZE, --size SIZE  size of huepaper in the form WIDTHxHEIGHT (default: 1920x1080)
        -c COLOR, --color COLOR
-                             color, the huepaper is generated from (uses a random color if not given)
-       -p, --preview         preview huepaper
+                             base color from which the huepaper is generated (default: random color)
+       -np, --no-preview     don't preview the huepaper
        -o OUTPUT, --output OUTPUT
-                             file where to save the huepaper to (default: None)
+                             filepath where the huepaper will be saved
        -l [LINES], --lines [LINES]
                              include one to three random lines in base color with given opacity in range [0, 1] (default: 0.3)
        -lb [LINES_BRIGHT], --lines_bright [LINES_BRIGHT]
@@ -91,39 +96,39 @@
    #+caption: Huepaper 1
    [[./images/huepaper_1.png]]
 
-   =huepaper -p=
+   =huepaper=
 
    --------------
 
    #+caption: Huepaper 1
    [[./images/huepaper_2.png]]
 
-   =huepaper -p -c lightgreen=
+   =huepaper -c lightgreen=
 
    --------------
 
    #+caption: Huepaper 3
    [[./images/huepaper_3.png]]
 
-   =huepaper -p -c "#ff7f50" -lb 0.05=
+   =huepaper -c "#ff7f50" -lb 0.05=
 
    --------------
 
    #+caption: Huepaper 4
    [[./images/huepaper_4.png]]
 
-   =huepaper -p -hue 1.0 -lmin 0.3 -lmax 0.6 -smin 0.8 -smax 1.0=
+   =huepaper -hue 1.0 -lmin 0.3 -lmax 0.6 -smin 0.8 -smax 1.0=
 
    --------------
 
    #+caption: Huepaper 5
    [[./images/huepaper_5.png]]
 
-   =huepaper -p -hue 0.3 -lmin 0.5 -lmax 0.5 -l 0.5 -P 64x36=
+   =huepaper -hue 0.3 -lmin 0.5 -lmax 0.5 -l 0.5 -P 64x36=
 
    --------------
 
    #+caption: Huepaper 6
    [[./images/huepaper_6.png]]
 
-   =huepaper -p -l -lb -ld -e nixos.png=
+   =huepaper -l -lb -ld -e nixos.png=

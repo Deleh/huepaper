@@ -42,11 +42,13 @@ if __name__ == "__main__":
     parser.add_argument(
         "-c",
         "--color",
-        help="color, the huepaper is generated from (uses a random color if not given)",
+        help="base color from which the huepaper is generated (default: random color)",
     )
-    parser.add_argument("-p", "--preview", action="store_true", help="preview huepaper")
     parser.add_argument(
-        "-o", "--output", help="file where to save the huepaper to (default: None)"
+        "-np", "--no-preview", action="store_true", help="don't preview the huepaper"
+    )
+    parser.add_argument(
+        "-o", "--output", help="filepath where the huepaper will be saved"
     )
     parser.add_argument(
         "-l",
@@ -117,7 +119,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     size = args.size
     color = args.color
-    preview = args.preview
+    no_preview = args.no_preview
     output = args.output
     lines = args.lines
     lines_bright = args.lines_bright
@@ -139,8 +141,8 @@ if __name__ == "__main__":
         parser.error("The size must be given in form: 1920x1080")
 
     # Check preconditions
-    if not preview and not output:
-        parser.error("You must either set -p (--preview) or -o (--output)")
+    if no_preview and not output:
+        parser.error("You must either omit -np (--no-preview) or set -o (--output)")
     if pixelate:
         try:
             values = pixelate.split("x")
@@ -171,7 +173,7 @@ if __name__ == "__main__":
 
     image.mode = "RGB"
 
-    if preview:
+    if not no_preview:
         image.show()
         if not output:
             save = input("Do you want to save the image? [y/N] ")
