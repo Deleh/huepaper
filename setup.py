@@ -1,4 +1,10 @@
 from setuptools import setup
+import os
+import shutil
+
+if not os.path.exists("bin"):
+    os.makedirs("bin")
+shutil.copyfile("huepaper.py", "bin/huepaper")
 
 setup(
     name="huepaper",

@@ -10,7 +10,6 @@ from huepaper import (
     save_image,
 )
 import argparse
-import os.path
 
 
 def print_greeter():
