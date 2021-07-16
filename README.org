@@ -1,4 +1,7 @@
 * huepaper - a colorful wallpaper generator
+  :PROPERTIES:
+  :CUSTOM_ID: huepaper
+  :END:
 
   #+caption: Logo
   [[./images/logo.png]]
@@ -8,8 +11,14 @@
   You can find [[#examples][examples]] below.
 
 ** Installation
+   :PROPERTIES:
+   :CUSTOM_ID: installation
+   :END:
 
 *** Nix
+    :PROPERTIES:
+    :CUSTOM_ID: nix
+    :END:
 
     This project is a [[https://nixos.wiki/wiki/Flakes][Nix Flake]].
     If you have a recent version of the [[https://nixos.org/][Nix package manager]] installed and flakes are enabled, run huepaper like this:
@@ -21,6 +30,9 @@
     Global installation can be done by including this flake in your flaked NixOS configuration as always :)
 
 *** Legacy
+    :PROPERTIES:
+    :CUSTOM_ID: legacy
+    :END:
 
     Execute the following steps to run huepaper:
 
@@ -36,6 +48,9 @@
     #+end_example
 
 ** Usage
+   :PROPERTIES:
+   :CUSTOM_ID: usage
+   :END:
 
    #+begin_example text
      usage: huepaper [-h] [-s SIZE] [-c COLOR] [-p] [-o OUTPUT] [-l [LINES]] [-lb [LINES_BRIGHT]] [-ld [LINES_DARK]] [-P [PIXELATE]] [-e EMBLEM] [-hue HUE] [-smin SMIN]
@@ -82,6 +97,9 @@
    If you want an offset, e.g. put it in the left bottom corner, provide an emblem file with the size of the huepaper, transparent background and your emblem in the bottom left corner.
 
 ** Examples
+   :PROPERTIES:
+   :CUSTOM_ID: examples
+   :END:
 
    Please note, that every huepaper call generates a new random image.
    You will never get the same huepaper twice.
