@@ -32,7 +32,7 @@
     #+begin_example sh
       nix run github:Deleh/huepaper -- -hue 0.5 --color lightblue
     #+end_example
-    
+
     Global installation can be done by including this flake in your flaked NixOS configuration as always :)
 
 *** Legacy
