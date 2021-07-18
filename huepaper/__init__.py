@@ -2,7 +2,6 @@
 
 from PIL import Image, ImageDraw, ImageOps
 from colour import Color
-import os.path
 import random
 
 
@@ -16,7 +15,6 @@ def get_base_color(
         sat = random.uniform(sat_min, sat_max)
         lum = random.uniform(lum_min, lum_max)
         base_color = Color(hue=hue, saturation=sat, luminance=lum)
-        print("Selected random base color: {}".format(base_color.hex))
 
     # Else try to parse string
     else:
@@ -26,14 +24,13 @@ def get_base_color(
             try:
                 base_color = Color("#{}".format(color_string))
             except:
-                print("Invalid color expression: {}".format(color_string))
-                exit(1)
+                raise Exception("Invalid color expression: {}".format(color_string))
 
     return base_color
 
 
 def create_colors(
-    base_color=None, hue_max=0.1, sat_min=0.2, sat_max=1.0, lum_min=0.2, lum_max=0.9
+    base_color=None, hue_max=0.1, sat_min=0.2, sat_max=1.0, lum_min=0.3, lum_max=0.9
 ):
     """Create four corner colors for a huepaper by an optional base color."""
     if not base_color:
@@ -160,13 +157,11 @@ def add_emblem(image, filepath):
     try:
         emblem_image = Image.open(filepath)
     except Exception as e:
-        print("Failed to load emblem: {}".format(e))
-        exit(1)
+        raise Exception("Failed to load emblem: {}".format(e))
 
     # Exit if emblem is too big
     if emblem_image.size[0] > width or emblem_image.size[1] > height:
-        print("Emblem can't be bigger than the wallpaper")
-        exit(1)
+        raise Exception("Emblem can't be bigger than the huepaper")
 
     # Insert emblem in the center
     offset = (
@@ -176,35 +171,3 @@ def add_emblem(image, filepath):
     image.alpha_composite(emblem_image, offset)
 
     return image
-
-
-def save_image(image, filepath):
-    """Save an image at given filepath."""
-    save = True
-
-    # Check whether file exists
-    if os.path.isfile(filepath):
-        overwrite = input(
-            "The file {} already exists. Do you want to overwrite it? [y/N] ".format(
-                filepath
-            )
-        )
-        if overwrite != "y" and overwrite != "Y":
-            save = False
-
-    if save:
-
-        stop = False
-        while not stop:
-            try:
-                image.save(filepath)
-                stop = True
-            except Exception as e:
-                print("Failed to save wallpaper: {}".format(e))
-                again = input("Do you want to try again? [Y/n] ")
-                if again == "n" or again == "N":
-                    stop = True
-                else:
-                    filepath = input(
-                        "Please enter new path where the wallpaper shall be saved: "
-                    )

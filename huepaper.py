@@ -7,9 +7,9 @@ from huepaper import (
     add_lines,
     add_pixelation,
     add_emblem,
-    save_image,
 )
 import argparse
+import os
 
 
 def print_greeter():
@@ -26,6 +26,38 @@ def print_greeter():
  OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO00O0000000000000000; 
 """
     print(greeter)
+
+
+def save_image(image, filepath):
+    """Save an image at given filepath."""
+    save = True
+
+    # Check whether file exists
+    if os.path.isfile(filepath):
+        overwrite = input(
+            "The file {} already exists. Do you want to overwrite it? [y/N] ".format(
+                filepath
+            )
+        )
+        if overwrite != "y" and overwrite != "Y":
+            save = False
+
+    if save:
+
+        stop = False
+        while not stop:
+            try:
+                image.save(filepath)
+                stop = True
+            except Exception as e:
+                print("Failed to save wallpaper: {}".format(e))
+                again = input("Do you want to try again? [Y/n] ")
+                if again == "n" or again == "N":
+                    stop = True
+                else:
+                    filepath = input(
+                        "Please enter new path where the wallpaper shall be saved: "
+                    )
 
 
 if __name__ == "__main__":
@@ -152,34 +184,45 @@ if __name__ == "__main__":
             parser.error("Pixelation value must be set in form: 42x42")
 
     print_greeter()
-    base_color = get_base_color(color, sat_min, sat_max, lum_min, lum_max)
-    c1, c2, c3, c4 = create_colors(
-        base_color, hue_max, sat_min, sat_max, lum_min, lum_max
-    )
-    image = create_base_image(c1, c2, c3, c4, width, height)
 
-    if lines:
-        image = add_lines(image, base_color.rgb + (lines,))
-    if lines_bright:
-        image = add_lines(image, (1.0, 1.0, 1.0, lines_bright))
-    if lines_dark:
-        image = add_lines(image, (0.0, 0.0, 0.0, lines_dark))
+    try:
+        random_color = False if color else True
+        base_color = get_base_color(color, sat_min, sat_max, lum_min, lum_max)
+        if random_color:
+            print("Selected random base color: {}".format(base_color.hex))
 
-    if pixelate:
-        image = add_pixelation(image, px, py)
+        c1, c2, c3, c4 = create_colors(
+            base_color, hue_max, sat_min, sat_max, lum_min, lum_max
+        )
 
-    if emblem:
-        image = add_emblem(image, emblem)
+        image = create_base_image(c1, c2, c3, c4, width, height)
 
-    image.mode = "RGB"
+        if lines:
+            image = add_lines(image, base_color.rgb + (lines,))
+        if lines_bright:
+            image = add_lines(image, (1.0, 1.0, 1.0, lines_bright))
+        if lines_dark:
+            image = add_lines(image, (0.0, 0.0, 0.0, lines_dark))
 
-    if not no_preview:
-        image.show()
-        if not output:
-            save = input("Do you want to save the image? [y/N] ")
-            if save == "y" or save == "Y":
-                path = input("Enter the path where the wallpaper shall be saved: ")
-                save_image(image, path)
+        if pixelate:
+            image = add_pixelation(image, px, py)
 
-    if output:
-        save_image(image, output)
+        if emblem:
+            image = add_emblem(image, emblem)
+
+        image.mode = "RGB"
+
+        if not no_preview:
+            image.show()
+            if not output:
+                save = input("Do you want to save the image? [y/N] ")
+                if save == "y" or save == "Y":
+                    path = input("Enter the path where the wallpaper shall be saved: ")
+                    save_image(image, path)
+
+        if output:
+            save_image(image, output)
+
+    except Exception as e:
+        print(str(e))
+        exit(1)
