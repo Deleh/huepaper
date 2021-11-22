@@ -3,7 +3,10 @@
 
   nixConfig.bash-prompt = "\[\\e[1m\\e[34mhuepaper-dev\\e[0m:\\w\]$ ";
 
-  inputs.flake-utils.url = "github:numtide/flake-utils";
+  inputs = {
+    nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
+    flake-utils.url = github:numtide/flake-utils;
+  };
 
   outputs = { self, nixpkgs, flake-utils }:
 
