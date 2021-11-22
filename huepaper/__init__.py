@@ -2,6 +2,7 @@
 
 from PIL import Image, ImageDraw, ImageOps
 from colour import Color
+import numpy as np
 import random
 
 
@@ -68,37 +69,18 @@ def create_base_image(c1, c2, c3, c4, width=1920, height=1080):
     c3 - bottom right
     c4 - bottom left
     """
-    # Lambda for adding four colors
-    add = lambda c1, c2, c3, c4: (
-        c1[0] + c2[0] + c3[0] + c4[0],
-        c1[1] + c2[1] + c3[1] + c4[1],
-        c1[2] + c2[2] + c3[2] + c4[2],
+    r = np.linspace(
+        np.linspace(c1[0], c4[0], height), np.linspace(c2[0], c3[0], height), width
+    )
+    g = np.linspace(
+        np.linspace(c1[1], c4[1], height), np.linspace(c2[1], c3[1], height), width
+    )
+    b = np.linspace(
+        np.linspace(c1[2], c4[2], height), np.linspace(c2[2], c3[2], height), width
     )
 
-    # Lambda for multiplying a color with a factor
-    mul = lambda c, x: (c[0] * x, c[1] * x, c[2] * x)
-
-    # Lambda for scaling a color from [0 , 1] to [0, 255]
-    cor = lambda c: (int(c[0] * 255), int(c[1] * 255), int(c[2] * 255))
-
-    # Lambda for calculating a color at x and y in range [0, 1]
-    #  Color limits are set at creation
-    col = lambda x, y, c1=c1, c2=c2, c3=c3, c4=c4: cor(
-        add(
-            mul(c1, (1.0 - x) * (1.0 - y)),
-            mul(c2, x * (1.0 - y)),
-            mul(c3, x * y),
-            mul(c4, (1.0 - x) * y),
-        )
-    )
-
-    # Create image
-    image = Image.new("RGBA", (width, height))
-    pixels = image.load()
-
-    for x in range(0, width):
-        for y in range(0, height):
-            pixels[x, y] = col(x / (width - 1), y / (height - 1))
+    im_arr = np.array([r, g, b]).T
+    image = Image.fromarray(np.uint8(im_arr * 255)).convert("RGBA")
 
     return image
 

@@ -21,6 +21,7 @@
               src = self;
               propagatedBuildInputs = with pkgs; [
                 python3Packages.colour
+                python3Packages.numpy
                 python3Packages.pillow
               ];
             };
@@ -38,6 +39,7 @@
             buildInputs = with pkgs; [
               python3
               python3Packages.colour
+              python3Packages.numpy
               python3Packages.pillow
               python3Packages.pip
               python3Packages.setuptools
