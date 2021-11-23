@@ -107,7 +107,7 @@ if __name__ == "__main__":
         help="include one to three dark random lines with given opacity in range [0, 1] (default: 0.1)",
     )
     parser.add_argument(
-        "-P",
+        "-p",
         "--pixelate",
         nargs="?",
         const="16x9",
