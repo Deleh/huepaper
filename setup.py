@@ -17,5 +17,5 @@ setup(
     license="LICENSE",
     description="A colorful wallpaper generator",
     long_description=open("README.org").read(),
-    install_requires=["colour", "pillow"],
+    install_requires=["colour", "numpy", "pillow"],
 )
