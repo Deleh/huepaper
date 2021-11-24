@@ -1,7 +1,4 @@
 * huepaper - a colorful wallpaper generator
-  :PROPERTIES:
-  :CUSTOM_ID: huepaper
-  :END:
 
   #+caption: Logo
   [[./images/logo.png]]
@@ -11,54 +8,35 @@
   You can find [[#examples][examples]] below.
 
 ** Installation
-   :PROPERTIES:
-   :CUSTOM_ID: installation
-   :END:
 
 *** Nix
-    :PROPERTIES:
-    :CUSTOM_ID: nix
-    :END:
 
     This project is a [[https://nixos.wiki/wiki/Flakes][Nix Flake]].
-    If you have a recent version of the [[https://nixos.org/][Nix package manager]] installed and flakes are enabled, run huepaper like this:
+    If you have a recent version of the [[https://nixos.org/][Nix package manager]] installed and Flakes are enabled, run huepaper like this:
 
-    #+begin_example sh
-      nix run github:Deleh/huepaper
-    #+end_example
+    : $ nix run github:Deleh/huepaper
 
     Parameters can be passed by appending a double-dash:
 
-    #+begin_example sh
-      nix run github:Deleh/huepaper -- -hue 0.5 --color lightblue
-    #+end_example
+    : $ nix run github:Deleh/huepaper -- -hue 0.5 --color lightblue
 
     Global installation can be done by including this flake in your flaked NixOS configuration as always :)
 
 *** Legacy
-    :PROPERTIES:
-    :CUSTOM_ID: legacy
-    :END:
 
     Execute the following steps to run huepaper:
 
-    #+begin_example sh
-      pip install -r requirements.txt
-      ./huepaper.py
+    : $ pip install -r requirements.txt
+    : $ ./huepaper.py
     #+end_example
 
     To install it in your Python environment run:
 
-    #+begin_example sh
-      python setup.py install
-    #+end_example
+    : $ python setup.py install
 
 ** Usage
-   :PROPERTIES:
-   :CUSTOM_ID: usage
-   :END:
 
-   #+begin_example text
+   #+begin_example
      usage: huepaper [-h] [-s SIZE] [-c COLOR] [-np] [-o OUTPUT] [-l [LINES]] [-lb [LINES_BRIGHT]] [-ld [LINES_DARK]] [-P [PIXELATE]] [-e EMBLEM] [-hue HUE] [-smin SMIN] [-smax SMAX] [-lmin LMIN] [-lmax LMAX]
 
      Create wallpapers based on color hues.
@@ -77,7 +55,7 @@
                              include one to three bright random lines with given opacity in range [0, 1] (default: 0.1)
        -ld [LINES_DARK], --lines_dark [LINES_DARK]
                              include one to three dark random lines with given opacity in range [0, 1] (default: 0.1)
-       -P [PIXELATE], --pixelate [PIXELATE]
+       -p [PIXELATE], --pixelate [PIXELATE]
                              pixelate image with WIDTHxHEIGHT (default: 16x9)
        -e EMBLEM, --emblem EMBLEM
                              emblem to add in the center of the huepaper
@@ -88,7 +66,7 @@
        -lmax LMAX            maximum luminance for colors in range [0, 1] (default: 0.9)
    #+end_example
 
-   All image operations are called in order of the help file. E.g. pixelate (=-P=) is called after adding lines (=-l=).
+   All image operations are called in order of the help file. E.g. pixelate (=-p=) is called after adding lines (=-l=).
 
    If you set the color via =-c= it is not guaranteed, that it is included in the huepaper.
    Colors, similar to the given one are chosen.
@@ -102,9 +80,9 @@
    If you want an offset, e.g. put it in the left bottom corner, provide an emblem file with the size of the huepaper, transparent background and your emblem in the bottom left corner.
 
 ** Examples
-   :PROPERTIES:
-   :CUSTOM_ID: examples
-   :END:
+   :properties:
+   :custom_id: examples
+   :end:
 
    Please note, that every huepaper call generates a new random image.
    You will never get the same huepaper twice.
@@ -116,35 +94,35 @@
 
    =huepaper=
 
-   --------------
+   -----
 
    #+caption: Huepaper 1
    [[./images/huepaper_2.png]]
 
    =huepaper -c lightgreen=
 
-   --------------
+   -----
 
    #+caption: Huepaper 3
    [[./images/huepaper_3.png]]
 
    =huepaper -c "#ff7f50" -lb 0.05=
 
-   --------------
+   -----
 
    #+caption: Huepaper 4
    [[./images/huepaper_4.png]]
 
    =huepaper -hue 1.0 -lmin 0.3 -lmax 0.6 -smin 0.8 -smax 1.0=
 
-   --------------
+   -----
 
    #+caption: Huepaper 5
    [[./images/huepaper_5.png]]
 
    =huepaper -hue 0.3 -lmin 0.5 -lmax 0.5 -l 0.5 -P 64x36=
 
-   --------------
+   -----
 
    #+caption: Huepaper 6
    [[./images/huepaper_6.png]]
