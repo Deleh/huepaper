@@ -60,8 +60,8 @@
        -e EMBLEM, --emblem EMBLEM
                              emblem to add in the center of the huepaper
        -hue HUE              maximum hue to differ from given color in range [0, 1] (default: 0.1)
-       -smin SMIN            minimum satisfaction for colors in range [0, 1] (default: 0.2)
-       -smax SMAX            maximum satisfaction for colors in range [0, 1] (default: 1.0)
+       -smin SMIN            minimum saturation for colors in range [0, 1] (default: 0.2)
+       -smax SMAX            maximum saturation for colors in range [0, 1] (default: 1.0)
        -lmin LMIN            minimum luminance for colors in range [0, 1] (default: 0.2)
        -lmax LMAX            maximum luminance for colors in range [0, 1] (default: 0.9)
    #+end_example
@@ -92,39 +92,39 @@
    #+caption: Huepaper 1
    [[./images/huepaper_1.png]]
 
-   =huepaper=
+   : $ huepaper
 
    -----
 
    #+caption: Huepaper 1
    [[./images/huepaper_2.png]]
 
-   =huepaper -c lightgreen=
+   : $ huepaper -c lightgreen
 
    -----
 
    #+caption: Huepaper 3
    [[./images/huepaper_3.png]]
 
-   =huepaper -c "#ff7f50" -lb 0.05=
+   : $ huepaper -c "#ff7f50" -lb 0.05
 
    -----
 
    #+caption: Huepaper 4
    [[./images/huepaper_4.png]]
 
-   =huepaper -hue 1.0 -lmin 0.3 -lmax 0.6 -smin 0.8 -smax 1.0=
+   : $ huepaper -hue 1.0 -lmin 0.3 -lmax 0.6 -smin 0.8 -smax 1.0
 
    -----
 
    #+caption: Huepaper 5
    [[./images/huepaper_5.png]]
 
-   =huepaper -hue 0.3 -lmin 0.5 -lmax 0.5 -l 0.5 -P 64x36=
+   : $ huepaper -hue 0.3 -lmin 0.5 -lmax 0.5 -l 0.5 -P 64x36
 
    -----
 
    #+caption: Huepaper 6
    [[./images/huepaper_6.png]]
 
-   =huepaper -l -lb -ld -e nixos.png=
+   : $ huepaper -l -lb -ld -e nixos.png
