@@ -126,13 +126,13 @@ if __name__ == "__main__":
         "-smin",
         default=0.2,
         type=float,
-        help="minimum satisfaction for colors in range [0, 1] (default: 0.2)",
+        help="minimum saturation for colors in range [0, 1] (default: 0.2)",
     )
     parser.add_argument(
         "-smax",
         default=1.0,
         type=float,
-        help="maximum satisfaction for colors in range [0, 1] (default: 1.0)",
+        help="maximum saturation for colors in range [0, 1] (default: 1.0)",
     )
     parser.add_argument(
         "-lmin",
@@ -163,6 +163,9 @@ if __name__ == "__main__":
     sat_max = args.smax
     lum_min = args.lmin
     lum_max = args.lmax
+
+    print(vars(args))
+    exit()
 
     # Get size
     try:
