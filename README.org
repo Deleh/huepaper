@@ -6,7 +6,7 @@
   *huepaper* creates wallpapers based on color hues. Bring a little color in your life by randomness, because every huepaper is truly unique.
 
   You can find [[#examples][examples]] below.
-  For even more examples visit the Mastodon [[https://botsin.space/@huebot][huebot]].
+  For more examples visit the Mastodon [[https://botsin.space/@huebot][huebot]].
 
 ** Installation
 
