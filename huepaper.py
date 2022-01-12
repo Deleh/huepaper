@@ -164,9 +164,6 @@ if __name__ == "__main__":
     lum_min = args.lmin
     lum_max = args.lmax
 
-    print(vars(args))
-    exit()
-
     # Get size
     try:
         values = size.split("x")
